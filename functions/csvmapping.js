@@ -119,5 +119,5 @@ const getReport = async function() {
   // Function to call
   const csvData = objectToCsv(data);
   download(csvData);
-  // console.log(csvData);
+  console.log(csvData);
 };
