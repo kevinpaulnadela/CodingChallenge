@@ -22,11 +22,9 @@ These are the columns that are required to display on the CSV:
 
 Computations have been based from my understanding in the description of fields.
 
-total_order_value - total value has been computed by unit_price multiplied by their quantities. Discounts have been included either to have both dollar amount and percentage discount.
+**total_order_value** - total value has been computed by unit_price multiplied by their quantities. Discounts have been included either to have both dollar amount and percentage discount.
 
 ```
-total_order_value
-
 Getting the final value with BOTH Percentage and Dollar Discounts:
 
 Quantity * Unit Price = Order Value
@@ -37,5 +35,46 @@ Percentage Discount Amount / 100 = Percentage Discount
 
 Final:
 Dollar Discounted Order Value - (Dollar Discounted Order Value * Percentage Discount)
+= Dollar and Percentage Discounted Order Value
+
+--------------
+
+Getting the final value with Dollar Discounts:
+
+Quantity * Unit Price = Order Value
+
+Final:
+Order Value - Dollar Discount
+= Dollar Discounted Order Value
+
+--------------
+
+Percentage Discount Amount / 100 = Percentage Discount
+
+Final:
+Dollar Discounted Order Value - (Dollar Discounted Order Value * Percentage Discount)
+= Percentage Discounted Order Value
 ```
 
+**average_unit_price** - total average unit price has been computed by adding up separately the total quantities, multiplied by units and divided into units again.
+
+```
+Quantity * Unit Price = Total Unit Price
+
+Final:
+Total Unit Price / Quantity
+```
+
+**distinct_unit_count** - all PID's in the order have been collated and placed array to look and count for Unique PID's 
+
+```
+Example:
+PID = [3793908, 3879592]
+Unique Count = 2
+```
+
+**total_units_count** - total quantities for all the products in the order
+
+```
+(ALL) + Quantity = Total Units Count
+```
