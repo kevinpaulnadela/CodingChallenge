@@ -22,9 +22,20 @@ These are the columns that are required to display on the CSV:
 
 Computations have been based from my understanding in the description of fields.
 
-total_order_value
+total_order_value - total value has been computed by unit_price multiplied by their quantities. Discounts have been included either to have both dollar amount and percentage discount.
 
 ```
 total_order_value
+
+Getting the final value with BOTH Percentage and Dollar Discounts:
+
+Quantity * Unit Price = Order Value
+
+Order Value - Dollar Discount = Dollar Discounted Order Value
+
+Percentage Discount Amount / 100 = Percentage Discount
+
+Final:
+Dollar Discounted Order Value - (Dollar Discounted Order Value * Percentage Discount)
 ```
 
