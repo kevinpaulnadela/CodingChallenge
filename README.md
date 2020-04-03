@@ -78,3 +78,11 @@ Unique Count = 2
 ```
 (ALL) + Quantity = Total Units Count
 ```
+
+## Usage (Temporary)
+
+The main app page has been uploaded temporarily to run and generate the CSV. Next changes will be make it to run and generate the CSV via CLI.
+
+```
+http://s.catch.com.au/images/edm/codingchallenge/index.html
+```
