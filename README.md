@@ -41,19 +41,20 @@ Order Subtotal - Total Discount
 
 Getting the final value with Dollar Discounts:
 
-Quantity * Unit Price = Order Value
+Quantity * Unit Price = Order Subtotal
 
 Final:
 Order Value - Dollar Discount
-= Dollar Discounted Order Value
+= Order Total Value
 
 --------------
+Unit Price * Quantity = Order Subtotal
 
-Percentage Discount Amount / 100 = Percentage Discount
+Percentage Discount * Order Subtotal / 100 = Percentage Discount Amount
 
 Final:
-Dollar Discounted Order Value - (Dollar Discounted Order Value * Percentage Discount)
-= Percentage Discounted Order Value
+Order Subtotal - Percentage Discount Amount
+= Order Total Value
 ```
 
 **average_unit_price** - total average unit price has been computed by adding up separately the total quantities, multiplied by units and divided into units again.
