@@ -27,15 +27,15 @@ Computations have been based from my understanding in the description of fields.
 ```
 Getting the final value with BOTH Percentage and Dollar Discounts:
 
-Quantity * Unit Price = Order Value
+Unit Price * Quantity = Order Subtotal
 
-Order Value - Dollar Discount = Dollar Discounted Order Value
+Percentage Discount * Order Subtotal / 100 = Percentage Discount Amount
 
-Percentage Discount Amount / 100 = Percentage Discount
+Percentage Discount Amount + Dollar Discount Amount = Total Discount
 
 Final:
-Dollar Discounted Order Value - (Dollar Discounted Order Value * Percentage Discount)
-= Dollar and Percentage Discounted Order Value
+Order Subtotal - Total Discount
+= Order Total Value
 
 --------------
 
