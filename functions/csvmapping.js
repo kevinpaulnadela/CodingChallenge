@@ -4,68 +4,56 @@ const getReport = async function() {
 
   // Get data from browser
   const res = await fetch(jsonlUrl);
-  const jsonl = await res.json();
+  const orders = await res.json();
 
   // Implicit return on objects for mapped columns
-  const data = jsonl.map(value => ({
+  const order = orders.map(items => ({
 
     // Get Order ID Column
-    order_id: value.order_id,
+    order_id: items.order_id,
 
     // Get Datetime Column
-    order_datetime: value.order_date,
+    order_datetime: items.order_date,
 
     // Get Total Order Value Column
-    total_order_value: 
+    total_order_value:
+
       (function(){
+        const discountType = items.discounts.map(items => items.type);
+        const discountValue = items.discounts.map(items => items.value);
+
         // Total of the items multiplied by the quantity
-        var quantityPrice = value.items.map(items => items.quantity * items.unit_price).reduce((prev, curr) => prev + curr, 0);
-        var dcType = value.discounts.map(items => items.type);
-        var dcVal = value.discounts.map(items => items.value);
+        const orderSubTotal = items.items.reduce((sum, item) => sum + item.unit_price * item.quantity, 0);
 
-        // Discounts object have both of Percentage and Dollar discounts
-        if ( (dcType.indexOf("PERCENTAGE") > -1) && (dcType.indexOf("DOLLAR") > -1) ) {
-          // Getting the Dollar and Percentage Discount Values
-          // Dollar Discount Value from dcType Array
-          var objdcVal = dcVal[0];
-          // Percentage Discount Value from dcType Array
-          var objpcVal = dcVal[1];
+        // Items with both dercentage and dollar discounts
+        if ( (discountType.indexOf("PERCENTAGE") > -1) && (discountType.indexOf("DOLLAR") > -1) ) {
 
-          var dollardcVal = quantityPrice - objdcVal
-          var dcAmount = objpcVal / 100;
-          var percentagedcVal = dollardcVal - (dollardcVal * dcAmount);
+          return '$' + (orderSubTotal - (discountValue[1] * orderSubTotal / 100 + discountValue[0])).toFixed(2)
 
-          // Final computation for Dollar + Percentage
-          return "$" + percentagedcVal.toFixed(2);
+        // Items with dollar discount
+        } else if (discountType.indexOf("DOLLAR") > -1) {
 
-        // Discounts object have Dollar discount
-        } else if (dcType.indexOf("DOLLAR") > -1) {
-          var dollardcVal = quantityPrice - dcVal
-
-          // Final computation for Dollar
-          return "$" + dollardcVal.toFixed(2);
+          return '$' + (orderSubTotal - discountValue).toFixed(2)
         
-        // Discounts object have Percentage discount
-        } else if (dcType.indexOf("PERCENTAGE") > -1) {
-          var dcAmount = dcVal / 100;
-          var percentagedcVal = quantityPrice - (quantityPrice * dcAmount);
+        // Items with percentage discount
+        } else if (discountType.indexOf("PERCENTAGE") > -1) {
 
-          // Final computation for Percentage
-          return "$" + percentagedcVal.toFixed(2);
+          return '$' + (orderSubTotal - discountValue * (orderSubTotal / 100)).toFixed(2)
 
-        // Discounts object is EMPTY
+        // Items with no discount
         } else {
-          return "$" + quantityPrice.toFixed(2);
-        }
 
-      })(),
+          return '$' + (orderSubTotal).toFixed(2)
+        
+        }
+     })(),
 
     // Get Average Unit Price Column
     // Get Quantiy * Unit Price / Total of Quantity
     average_unit_price: 
       (function() { 
-        var totalQuantity = value.items.map(items => items.quantity)
-        var quantityPrice = value.items.map(items => items.quantity * items.unit_price)
+        var totalQuantity = items.items.map(items => items.quantity)
+        var quantityPrice = items.items.map(items => items.quantity * items.unit_price)
 
         var rdcquantityPrice = quantityPrice.reduce((prev, curr) => prev + curr, 0);
         var rdctotalQuantity = totalQuantity.reduce((prev, curr) => prev + curr, 0);
@@ -78,7 +66,7 @@ const getReport = async function() {
     // Get Distinct Unit Count Column
     distinct_unit_count:
       (function() {
-        var totalPid = value.items.map(items => items.product.product_id)
+        var totalPid = items.items.map(items => items.product.product_id)
 
         // Product IDs to set as a new array
         let pidCount = Array.from(new Set(totalPid))
@@ -91,7 +79,7 @@ const getReport = async function() {
     total_units_count: 
       (function() {
         // Map Quantity object and total the values
-        var totalQuantity = value.items.map(items => items.quantity)
+        var totalQuantity = items.items.map(items => items.quantity)
 
         // Total quantity of order
         return totalQuantity.reduce((prev, curr) => prev + curr, 0)
@@ -101,7 +89,7 @@ const getReport = async function() {
     customer_state:
       (function() {
         // Get the state object
-        var customerState = value.customer.shipping_address.state
+        var customerState = items.customer.shipping_address.state
         
         // Function to translate the capitalise cased strings into title case format
         function titleCase(str) {
@@ -117,7 +105,7 @@ const getReport = async function() {
   }));
   
   // Function to call
-  const csvData = objectToCsv(data);
-  download(csvData);
+  const csvData = objectToCsv(order);
+  // download(csvData);
   console.log(csvData);
 };
