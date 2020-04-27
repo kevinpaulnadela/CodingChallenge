@@ -7,6 +7,6 @@ avgUnitPrice = (order) => {
   var totalAvg = rdcquantityPrice / rdctotalQuantity;
 
   // Total Avg unit price
-  return "$" + totalAvg.toFixed(2);
+  return "$"+totalAvg.toFixed(2);
 }
 module.exports = avgUnitPrice;
