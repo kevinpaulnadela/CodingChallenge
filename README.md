@@ -1,6 +1,6 @@
 # JSON 2 CSV JS App
 
-A Javascript based app to parse JSON data and outputs into CSV file via clicking Download button.
+A Javascript based app to parse JSON data and outputs into CSV file via NodeJS by running node -r esm main_app.js.
 
 The generated CSV file has been validated and tested through https://csvlint.io. 
 
