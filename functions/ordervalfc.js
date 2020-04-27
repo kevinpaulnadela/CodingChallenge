@@ -15,5 +15,4 @@ totalOrderVal = (order) => {
 
     '$' + (orderSubTotal).toFixed(2)  // Item has no discount
 }
-
 module.exports = totalOrderVal;
