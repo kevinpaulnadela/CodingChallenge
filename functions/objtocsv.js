@@ -18,5 +18,4 @@ const objectToCsv = function(items) {
   }
   return csvRows.join('\n');
 }
-
 module.exports = objectToCsv;
