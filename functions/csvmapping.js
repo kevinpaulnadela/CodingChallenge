@@ -1,13 +1,38 @@
-const getReport = async function() {
+import * as totalOrder from './totalorder.js'
+import * as download from './dlblob.js'
+
+const objectToCsv = function(items) {
+    
+  // Empty array to push in to CSV
+  const csvRows = [];
+
+  // Getting the headers for CSV at comma separated format
+  const headers = Object.keys(items[0]);
+  csvRows.push(headers.join(','));
+  
+  // Loop for the rows
+  for (const row of items) {
+    // Mapping the data into the headers
+    const values = headers.map(header => {
+      // Forcing the value into string to replace/escape quotes
+      const escaped = (''+row[header]).replace(/"/g, '\\"');
+      return `"${escaped}"`;
+    });
+    csvRows.push(values.join(','));
+  }
+  return csvRows.join('\n');
+};
+
+export const getReport = async function() {
   // JSON location
-  const jsonlUrl = 'https://next.json-generator.com/api/json/get/EJROS4MLu'
+   const jsonlUrl = 'https://next.json-generator.com/api/json/get/EJROS4MLu'
 
   // Get data from browser
-  const res = await fetch(jsonlUrl);
-  const orders = await res.json();
+   const res = await fetch(jsonlUrl);
+   const orders = await res.json();
 
   // Implicit return on objects for mapped columns
-  const order = orders.map(items => ({
+   const order = orders.map(items => ({
 
     // Get Order ID Column
     order_id: items.order_id,
@@ -16,37 +41,7 @@ const getReport = async function() {
     order_datetime: items.order_date,
 
     // Get Total Order Value Column
-    total_order_value:
-
-      (function(){
-        const discountType = items.discounts.map(items => items.type);
-        const discountValue = items.discounts.map(items => items.value);
-
-        // Total of the items multiplied by the quantity
-        const orderSubTotal = items.items.reduce((sum, item) => sum + item.unit_price * item.quantity, 0);
-
-        // Items with both dercentage and dollar discounts
-        if ( (discountType.indexOf("PERCENTAGE") > -1) && (discountType.indexOf("DOLLAR") > -1) ) {
-
-          return '$' + (orderSubTotal - (discountValue[1] * orderSubTotal / 100 + discountValue[0])).toFixed(2)
-
-        // Items with dollar discount
-        } else if (discountType.indexOf("DOLLAR") > -1) {
-
-          return '$' + (orderSubTotal - discountValue).toFixed(2)
-        
-        // Items with percentage discount
-        } else if (discountType.indexOf("PERCENTAGE") > -1) {
-
-          return '$' + (orderSubTotal - discountValue * (orderSubTotal / 100)).toFixed(2)
-
-        // Items with no discount
-        } else {
-
-          return '$' + (orderSubTotal).toFixed(2)
-        
-        }
-     })(),
+    total_order_value: totalOrder(),
 
     // Get Average Unit Price Column
     // Get Quantiy * Unit Price / Total of Quantity
@@ -103,9 +98,8 @@ const getReport = async function() {
       })()
 
   }));
-  
   // Function to call
   const csvData = objectToCsv(order);
-  // download(csvData);
+  download(csvData);
   console.log(csvData);
 };

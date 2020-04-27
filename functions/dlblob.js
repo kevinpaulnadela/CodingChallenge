@@ -1,4 +1,4 @@
-const download = function(data){
+export const download = function(data){
   // Blob to download CSV
   const blob = new Blob([data], { type: 'text/csv' });
   const url = window.URL.createObjectURL(blob);
