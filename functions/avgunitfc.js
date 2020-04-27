@@ -9,5 +9,4 @@ avgUnitPrice = (order) => {
   // Total Avg unit price
   return "$" + totalAvg.toFixed(2);
 }
-
 module.exports = avgUnitPrice;
