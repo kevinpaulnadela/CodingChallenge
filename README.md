@@ -7,7 +7,7 @@ The generated CSV file has been validated and tested through https://csvlint.io.
 ## Usage
 
 ```
-node -r esm main_app.js.
+node -r esm main_app.js
 ```
 
 ## Minor Feature Changes
