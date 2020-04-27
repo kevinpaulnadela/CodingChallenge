@@ -5,5 +5,4 @@ totalUnitsCount = (order) => {
   // Total quantity of order
   return totalQuantity.reduce((prev, curr) => prev + curr, 0);
  }
- 
  module.exports = totalUnitsCount;
