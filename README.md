@@ -1,8 +1,24 @@
 # JSON 2 CSV JS App
 
-A Javascript based app to parse JSON data and outputs into CSV file via NodeJS by running node -r esm main_app.js.
+A Javascript based app to parse JSON data and outputs into CSV file via NodeJS.
 
 The generated CSV file has been validated and tested through https://csvlint.io. 
+
+## Usage
+
+```
+node -r esm main_app.js.
+```
+
+## Minor Feature Changes
+*App can be run into NodeJS
+*App lets you input the filename of the CSV
+*Functions have been translated into NodeJS Modules
+
+## Roadblocks
+*After Paul reviewed the codes of the first commit, the challenge was making the app run into the Node environment. It was resolved by calling a node module writeFile. I also installed an NPM package node-fetch to eliminate the fetching error from the async function 
+*Translation of functions into NodeJS Modules was also a challenge as I was getting an error exporting and importing functions
+*After making the functions into modules, calling and executing those that are inside the orders.map function was throwing an error. Many thanks to Phil! What I was missing is the order parameter in calling the function
 
 ## Columns and Values Summary
 
@@ -29,9 +45,8 @@ Getting the final value with BOTH Percentage and Dollar Discounts:
 
 Unit Price * Quantity = Order Subtotal
 
-Percentage Discount * Order Subtotal / 100 = Percentage Discount Amount
+Percentage Discount * Order Subtotal / 100 + Dollar Discount = Total Discount
 
-Percentage Discount Amount + Dollar Discount Amount = Total Discount
 
 Final:
 Order Subtotal - Total Discount
@@ -50,7 +65,7 @@ Order Value - Dollar Discount
 --------------
 Unit Price * Quantity = Order Subtotal
 
-Percentage Discount * Order Subtotal / 100 = Percentage Discount Amount
+Percentage Discount * (Order Subtotal / 100) = Percentage Discount Amount
 
 Final:
 Order Subtotal - Percentage Discount Amount
@@ -78,12 +93,4 @@ Unique Count = 2
 
 ```
 (ALL) + Quantity = Total Units Count
-```
-
-## Usage (Temporary)
-
-The main app page has been uploaded temporarily to run and generate the CSV. Next changes will be make it to run and generate the CSV via CLI.
-
-```
-http://s.catch.com.au/images/edm/codingchallenge/index.html
 ```
