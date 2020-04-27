@@ -12,5 +12,4 @@ customerStates = (order) => {
   return titleCase(customerState)
   // return customerState
 }
-
 module.exports = customerStates;
