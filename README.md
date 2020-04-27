@@ -11,14 +11,14 @@ node -r esm main_app.js
 ```
 
 ## Minor Feature Changes
-*App can be run into NodeJS
-*App lets you input the filename of the CSV
-*Functions have been translated into NodeJS Modules
+* App can be run into NodeJS
+* App lets you input the filename of the CSV
+* Functions have been translated into NodeJS Modules
 
 ## Roadblocks
-*After Paul reviewed the codes of the first commit, the challenge was making the app run into the Node environment. It was resolved by calling a node module writeFile. I also installed an NPM package node-fetch to eliminate the fetching error from the async function 
-*Translation of functions into NodeJS Modules was also a challenge as I was getting an error exporting and importing functions
-*After making the functions into modules, calling and executing those that are inside the orders.map function was throwing an error. Many thanks to Phil! What I was missing is the order parameter in calling the function
+* After the review of the first committed codes, the challenge was making the app run into the Node environment. It was resolved by calling a node module writeFile. I also installed an NPM package node-fetch to eliminate the fetching error from the async function 
+* Translation of functions into NodeJS Modules was also a challenge as I was getting an error exporting and importing functions
+* After making the functions into modules, calling and executing those that are inside the orders.map function was throwing an error. Many thanks to Phil! What I was missing is the order parameter in calling the function
 
 ## Columns and Values Summary
 
